@@ -1,5 +1,18 @@
-const CACHE = 'asrar-azal-v6-clean';
-const ASSETS = ['./', './index.html', './app.css', './app.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const CACHE = 'asrar-azal-v7-modals';
+const ASSETS = [
+  './',
+  './index.html',
+  './app.css',
+  './app.js',
+  './app-1.js',
+  './app-2.js',
+  './app-3.js',
+  './app-4.js',
+  './app-5.js',
+  './app-6.js',
+  './manifest.webmanifest',
+  './icon.svg'
+];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
