@@ -15,7 +15,7 @@
     const st = document.createElement('style');
     st.textContent = css;
     document.head.appendChild(st);
-    const counts = [7, 2, 6, 8, 6, 3];
+    const counts = [8, 3, 7, 9, 7, 3];
     let code='';
     for(let i=1;i<=6;i++){
       code += await loadParts('app-'+i, counts[i-1]);
