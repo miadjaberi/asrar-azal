@@ -1,9 +1,10 @@
 (async function(){
   try{
     let b64='';
-    for(let i=1;i<=9;i++){
-      const r=await fetch('./payload.p'+i+'.b64');
-      if(!r.ok) throw new Error('payload.p'+i+' '+r.status);
+    for(let i=1;i<=17;i++){
+      const id=String(i).padStart(2,'0');
+      const r=await fetch('./payload.'+id+'.b64');
+      if(!r.ok) throw new Error('payload.'+id+' '+r.status);
       b64+=(await r.text()).trim();
     }
     const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
