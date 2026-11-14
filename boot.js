@@ -5,7 +5,7 @@
       const id=String(i).padStart(2,'0');
       const r=await fetch('./payload.'+id+'.b64');
       if(!r.ok) throw new Error('payload.'+id+' '+r.status);
-      b64+=(await r.text()).trim();
+      b64+=(await r.text()).replace(/\s+/g,'');
     }
     const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
     const ds=new DecompressionStream('gzip');
