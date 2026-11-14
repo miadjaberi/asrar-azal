@@ -1,7 +1,7 @@
 (async function(){
   try{
     let b64='';
-    for(let i=1;i<=17;i++){
+    for(let i=1;i<=44;i++){
       const id=String(i).padStart(2,'0');
       const r=await fetch('./payload.'+id+'.b64');
       if(!r.ok) throw new Error('payload.'+id+' '+r.status);
