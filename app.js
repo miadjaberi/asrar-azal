@@ -1,19 +1,21 @@
 (async function(){
-  var n=3, parts=[];
-  for(var i=1;i<=n;i++){
-    var r=await fetch('s'+i+'.b64?v=5',{cache:'no-store'});
-    if(!r.ok) throw new Error('chunk '+i);
-    parts.push(await r.text());
+  var urls=[
+    'https://cdn.jsdelivr.net/gh/miadjaberi/asrar-azal@8b395c146a34e408fdc20172194f70bc606f3111/app.js',
+    'https://raw.githubusercontent.com/miadjaberi/asrar-azal/8b395c146a34e408fdc20172194f70bc606f3111/app.js'
+  ];
+  var lastErr;
+  for(var i=0;i<urls.length;i++){
+    try{
+      var r=await fetch(urls[i],{cache:'no-store'});
+      if(!r.ok) throw new Error('http '+r.status);
+      var code=await r.text();
+      if(code.length<1000) throw new Error('short');
+      (0,eval)(code);
+      return;
+    }catch(e){lastErr=e;}
   }
-  var b64=parts.join('');
-  var bin=atob(b64);
-  var bytes=new Uint8Array(bin.length);
-  for(var j=0;j<bin.length;j++) bytes[j]=bin.charCodeAt(j);
-  var ds=new DecompressionStream('gzip');
-  var stream=new Response(bytes).body.pipeThrough(ds);
-  var code=await new Response(stream).text();
-  (0,eval)(code);
+  throw lastErr||new Error('load failed');
 })().catch(function(e){
   console.error(e);
-  document.body.innerHTML='<p style="color:#fff;padding:20px;direction:rtl;text-align:center;font-family:Tahoma">خطا در بارگذاری. رفرش کنید.<br><small>'+e+'</small></p>';
+  document.body.innerHTML='<p style="color:#fff;padding:20px;font-family:Tahoma,sans-serif;direction:rtl;text-align:center">خطا در بارگذاری. چند ثانیه صبر کنید و رفرش کنید.<br><small>'+String(e)+'</small></p>';
 });
