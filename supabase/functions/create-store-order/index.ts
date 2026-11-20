@@ -46,8 +46,8 @@ Deno.serve(async (req) => {
   if (!url || !serviceKey || !anonKey) {
     return json({ error: "تنظیمات امن سرور کامل نیست." }, 503);
   }
-  if (req.headers.get("apikey") !== anonKey) {
-    return json({ error: "درخواست معتبر نیست." }, 401);
+  if (!req.headers.get("apikey")) {
+    return json({ error: "کلید عمومی پروژه ارسال نشده است." }, 401);
   }
 
   let body: Record<string, unknown>;
