@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0818">
+<title>گزارش وضعیت | اسرار ازل</title>
+<style>
+:root{color-scheme:dark;--bg:#0a0818;--panel:#17132b;--line:#393052;--gold:#e6c477;--text:#f5f0e5;--muted:#c2b9d2;--green:#8bd6a5;--amber:#f0c879}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#21183c 0,var(--bg) 65%);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.9;padding:22px 14px 40px}.wrap{max-width:760px;margin:auto}.top{border:1px solid var(--line);border-radius:18px;padding:22px;background:linear-gradient(145deg,#211a38,#121024);text-align:center}.top h1{margin:0;color:var(--gold);font-size:24px}.top p{margin:6px 0 0;color:var(--muted);font-size:13px}.meta{margin-top:14px;color:var(--muted);font-size:12px}.section{margin-top:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(23,19,43,.94)}h2{font-size:17px;margin:0 0 12px;color:var(--gold)}ul{list-style:none;padding:0;margin:0}.item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07)}.item:last-child{border:0}.mark{flex:0 0 23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:bold;margin-top:2px}.done .mark{background:#183b2a;color:var(--green)}.todo .mark{background:#46351c;color:var(--amber)}.item strong{display:block;font-size:14px}.item small{display:block;color:var(--muted);font-size:12px;line-height:1.8}.note{margin-top:16px;border-right:3px solid var(--amber);padding:10px 13px;background:#241d30;border-radius:8px;color:#eee2c8;font-size:13px}.foot{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}.back{display:inline-block;margin-top:14px;color:var(--gold);text-decoration:none;border:1px solid var(--line);padding:7px 14px;border-radius:20px;font-size:13px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<h1>گزارش پیشرفت اسرار ازل</h1>
+<p>چک‌لیست فنی پروژه · نسخه آنلاین</p>
+<div class="meta">آخرین به‌روزرسانی گزارش: ۲۰ نوامبر ۲۰۲۶</div>
+</header>
+
+<section class="section">
+<h2>✓ کارهای انجام‌شده</h2>
+<ul>
+<li class="item done"><span class="mark">✓</span><div><strong>نسخه پشتیبان و شاخه کاری</strong><small>پیش از اصلاحات، نسخه پشتیبان جداگانه ایجاد شد؛ تغییرات ابتدا در شاخه کاری انجام و سپس ادغام شدند.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>بهبود بارگذاری تصاویر</strong><small>بارگذاری تنبل برای تصاویر صفحات و بارگذاری تدریجی تصاویر کارت‌های کتاب اضافه شد. فشرده‌سازی خود فایل‌های تصویر هنوز انجام نشده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>Service Worker آنلاین</strong><small>ثبت سرویس‌ورکر اضافه شد؛ درخواست‌ها به شبکه فرستاده می‌شوند و کش یا جایگزین آفلاین پیاده‌سازی نشده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>آماده‌سازی نصب PWA</strong><small>Manifest و آیکون‌های ۱۹۲ و ۵۱۲ پیکسلی اضافه و فراداده نصب تنظیم شد.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>آماده‌سازی اتصال Supabase</strong><small>کد خواندن و ذخیره محتوای سایت، ورود مدیر و آپلود تصویر به Storage آماده شده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>طرح اولیه دیتابیس و امنیت</strong><small>فایل SQL برای جدول محتوا، فضای ذخیره تصاویر و سیاست‌های دسترسی RLS نوشته شده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>راهنمای راه‌اندازی</strong><small>مراحل اتصال Supabase و نکات امنیتی در README مخزن ثبت شده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>بررسی نحوی فایل‌ها</strong><small>کد JavaScript از نظر خطای نحوی و Manifest از نظر ساختار JSON بررسی شده‌اند.</small></div></li>
+</ul>
+</section>
+
+<section class="section">
+<h2>◷ کارهای باقی‌مانده</h2>
+<ul>
+<li class="item todo"><span class="mark">!</span><div><strong>ساخت پروژه واقعی Supabase</strong><small>پروژه هنوز ساخته نشده؛ بنابراین اتصال زنده دیتابیس و فضای ذخیره‌سازی فعال نیست.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>تکمیل تنظیمات اتصال</strong><small>پس از ساخت پروژه، Project URL و کلید عمومی Publishable/anon باید در supabase-config.js وارد شوند. کلید محرمانه هرگز نباید در سایت قرار گیرد.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>اجرای فایل SQL</strong><small>Migration موجود باید در SQL Editor پروژه Supabase اجرا شود.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>ساخت حساب مدیر و تعیین نقش</strong><small>حساب مدیر باید در Supabase Auth ساخته و نقش admin به‌صورت امن در app_metadata تنظیم شود.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>فشرده‌سازی تصاویر حجیم</strong><small>حجم فایل‌های اصلی تصاویر فروشگاه هنوز کاهش داده نشده است.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>تست واقعی سایت و موبایل</strong><small>بازشدن صفحات، مودال‌ها، ورود مدیر، ذخیره محتوا، آپلود تصویر، نصب روی صفحه اصلی و عملکرد روی گوشی باید آزمایش شوند.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>تأیید انتشار نهایی</strong><small>پس از تکمیل تنظیمات و تست، وضعیت انتشار GitHub Pages و نسخه نهایی سایت باید بررسی شود.</small></div></li>
+</ul>
+</section>
+
+<div class="note"><strong>وضعیت فعلی سرور:</strong> اتصال نرم‌افزاری و فایل‌های راه‌اندازی آماده‌اند؛ اما پروژه Supabase هنوز ساخته و متصل نشده است. بنابراین قابلیت‌های وابسته به سرور تا آن زمان عملیاتی محسوب نمی‌شوند.</div>
+<div class="foot">این گزارش وضعیت واقعی کارهای ثبت‌شده را نشان می‌دهد و جایگزین تست اجرایی نیست.<br><a class="back" href="./">بازگشت به اسرار ازل</a></div>
+</main>
+</body>
+</html>
