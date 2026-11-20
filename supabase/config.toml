@@ -1,0 +1,4 @@
+project_id = "asrar-azal"
+
+[functions.create-store-order]
+verify_jwt = false
