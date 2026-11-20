@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
 
     const id = crypto.randomUUID();
     const orderCode = "AZ-" + randomHex(10);
-    const receiptPath = id + "/receipt." + extensions[mime];
+    const receiptPath = id + "/pending";
     const { error: insertError } = await db.from("store_orders").insert({
       id,
       order_code: orderCode,
@@ -142,19 +142,9 @@ Deno.serve(async (req) => {
       return json({ error: "ثبت اولیه سفارش انجام نشد." }, 500);
     }
 
-    const { data: upload, error: uploadError } = await db.storage
-      .from("asrar-payment-receipts")
-      .createSignedUploadUrl(receiptPath);
-    if (uploadError || !upload) {
-      await db.from("store_orders").delete().eq("id", id);
-      console.error("Signed upload creation failed", uploadError?.message);
-      return json({ error: "آماده‌سازی بارگذاری فیش انجام نشد." }, 503);
-    }
-
     return json({
       orderId: id,
       orderCode,
-      upload: { path: receiptPath, token: upload.token },
       totalToman: total.toString(),
       payment: {
         cardNumber: settings.payment_card_number,
@@ -166,6 +156,40 @@ Deno.serve(async (req) => {
         hours: settings.contact_hours || "۱۸ الی ۲۱",
       },
     });
+  }
+
+  if (body.action === "prepare-receipt") {
+    const orderCode = String(body.orderCode || "").trim().toUpperCase();
+    const phone = normalizePhone(body.buyerPhone);
+    const mime = String(body.receiptMime || "").toLowerCase();
+    const extensions: Record<string, string> = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp",
+    };
+    if (!/^AZ-[0-9A-F]{10}$/.test(orderCode) || phone.length < 7 || !extensions[mime]) {
+      return json({ error: "کد پیگیری، شماره تماس یا نوع تصویر معتبر نیست." }, 400);
+    }
+    const { data: order, error } = await db.from("store_orders")
+      .select("id,status")
+      .eq("order_code", orderCode)
+      .eq("buyer_phone", phone)
+      .maybeSingle();
+    if (error || !order) return json({ error: "سفارش پیدا نشد." }, 404);
+    if (order.status !== "awaiting_receipt") return json({ error: "این سفارش در انتظار فیش نیست." }, 409);
+
+    const receiptPath = order.id + "/receipt-" + randomHex(8) + "." + extensions[mime];
+    const { data: upload, error: uploadError } = await db.storage
+      .from("asrar-payment-receipts")
+      .createSignedUploadUrl(receiptPath);
+    if (uploadError || !upload) return json({ error: "آماده‌سازی بارگذاری فیش انجام نشد." }, 503);
+
+    const { error: pathError } = await db.from("store_orders")
+      .update({ receipt_path: receiptPath, updated_at: new Date().toISOString() })
+      .eq("id", order.id)
+      .eq("status", "awaiting_receipt");
+    if (pathError) return json({ error: "ذخیره مسیر امن فیش انجام نشد." }, 500);
+    return json({ upload: { path: receiptPath, token: upload.token } });
   }
 
   if (body.action === "finalize") {
