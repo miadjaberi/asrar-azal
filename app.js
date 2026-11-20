@@ -1,6 +1,6 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const im=u=>{u=String(u||'');return (/^(\/_blob\/[0-9a-f]+|data:image\/)/.test(u)||/^\/?shop\/[a-z0-9._-]+$/i.test(u))?u:'';};
+const im=u=>{u=String(u||'');if((/^(\/_blob\/[0-9a-f]+|data:image\/)/.test(u)||/^\/?shop\/[a-z0-9._-]+$/i.test(u)))return u;try{const cfg=window.ASRAR_SUPABASE_CONFIG||{},base=new URL(cfg.url),x=new URL(u);return x.protocol==='https:'&&x.origin===base.origin?x.href:''}catch(e){return''}};
 const bgObserver=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>{for(const entry of entries){if(!entry.isIntersecting)continue;const el=entry.target,url=el.dataset.bg;if(url){el.style.backgroundImage=`url("${url}")`;el.dataset.bgLoaded='1'}bgObserver.unobserve(el)}},{rootMargin:'180px 0px'}):null;
 function observeBackgrounds(root=document){root.querySelectorAll('[data-bg]').forEach(el=>{if(!el.dataset.bg||el.dataset.bgLoaded)return;if(bgObserver)bgObserver.observe(el);else{el.style.backgroundImage=`url("${el.dataset.bg}")`;el.dataset.bgLoaded='1'}})}
 const GR=['linear-gradient(160deg,#3a4a3a,#161a16)','linear-gradient(170deg,#3b1d86,#d9822b)','linear-gradient(170deg,#1c2a5a,#6a5aa8)','linear-gradient(170deg,#6a3a14,#e0a040)','linear-gradient(170deg,#0f4a4a,#3aa890)'];
@@ -21,6 +21,7 @@ duas:[{t:'دعای ویژه ۱',b:'متن این دعا را از پنل مدی�
 pages:{prof:{t:'پروفایل',b:'اطلاعات حساب شما در این بخش نمایش داده می‌شود.'}},rev:4};
 D.modals.push({t:'ازدواج یا جدایی',s:'محاسبه ابجد ترتیبی زوجین',b:`راهنمای استفاده: نام آقا، نام مادر آقا، نام خانم و نام مادر خانم را وارد کنید.\nروش محاسبه: ابجد ترتیبی ۲۸ حرفی هر چهار نام محاسبه می‌شود، سپس ۱۸۴ به جمع افزوده و باقیمانده تقسیم بر ۲۸ از جدول نتایج استخراج می‌شود.\nقواعد ویژه: ژ به ز، گ به ک، چ به ج و پ به ب تبدیل می‌شود؛ موسی به موسا و مصطفی به مصطفا تبدیل می‌شوند؛ واژهٔ سماء در محاسبه منظور نمی‌شود.`});
 const HAS=typeof claude!=='undefined';let U=null,C=structuredClone(D),db=null,ART='',bi=0,ci=1,ti=0,bt,cur='home',lq='',lc='';
+let sbClient=null;try{const cfg=window.ASRAR_SUPABASE_CONFIG||{};if(cfg.url&&cfg.anonKey&&window.supabase?.createClient)sbClient=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){console.error('Supabase configuration error',e)}
 const art0=$('.art');ART=art0?art0.outerHTML:'';if(art0)art0.remove();
 const lg0=$('#lg');const lw=document.createElement('span');lw.id='lw';let LG=lg0?lg0.outerHTML:'';if(lg0)lg0.replaceWith(lw);else{const host=document.querySelector('.ttl');if(host)host.appendChild(lw);}
 const tr=$('#tr'),dots=$('#dots'),cv=$('#cv');
@@ -69,7 +70,7 @@ function nextM(){const m=mq.shift();if(!m){mo.style.display='none';return}
  mo.innerHTML=`<div class="mc"><h3>${esc(m.x.t)}</h3><p>${esc(m.x.b).replace(/\n/g,'<br>')}</p><button class="btn" id="mok">${esc(m.x.btn||'باشه')}</button></div>`;mo.style.display='flex';
  $('#mok').onclick=()=>{try{window[m.st].setItem(m.k,'1')}catch(e){}nextM()}}
 $('#fab').onclick=()=>{show('cafe');setTimeout(()=>{const t=$('#mt');if(t)t.focus()},60)};
-setTimeout(startM,1200);
+if(!sbClient)setTimeout(startM,1200);
 /* pages */
 let curArg=0;const pg=$('#pg');
 const navs=$$('nav button');
@@ -138,16 +139,18 @@ ap.addEventListener('click',async e=>{const t=e.target.closest('button');if(!t)r
  else if(d.add){A[d.add].push({...NEW[d.add]});admR()}
  else if(d.del){const[k,i]=d.del.split('.');A[k].splice(+i,1);admR()}
  else if(d.clr){setP(A,d.clr,'');admR()}
- else if(d.up){const as=HAS?await claude.use('assets'):null;if(HAS&&!as){$('#sm').textContent='آپلود در دسترس نیست';return}
-  const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=async()=>{try{$('#sm').textContent='در حال آپلود…';if(as){const r=await as.upload(f.files[0]);setP(A,d.up,r.url.startsWith('/_blob/')?r.url:'/_blob/'+r.id)}else{if(f.files[0].size>1.5e6)throw 0;const fr=new FileReader();setP(A,d.up,await new Promise((ok,no)=>{fr.onload=()=>ok(fr.result);fr.onerror=no;fr.readAsDataURL(f.files[0])}))}admR('تصویر بارگذاری شد؛ برای انتشار ذخیره کنید')}catch(x){$('#sm').textContent='خطا در آپلود'}};f.click()}
- else if(t.id=='sv'){if(HAS&&!db){$('#sm').textContent='ذخیره‌سازی در دسترس نیست';return}
-  try{if(HAS)await db.doc('site/content').set(JSON.parse(JSON.stringify(A)));else localStorage.setItem('site',JSON.stringify(A));C=structuredClone(A);render();$('#sm').textContent='ذخیره شد ✓'}catch(x){$('#sm').textContent='ذخیره نشد: دسترسی مدیر لازم است'}}});
+ else if(d.up){const as=HAS?await claude.use('assets'):null;if(HAS&&!as&&!sbClient){$('#sm').textContent='آپلود در دسترس نیست';return}
+  const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=async()=>{try{$('#sm').textContent='در حال آپلود…';if(sbClient){const file=f.files[0],safeName=String(file.name||'image').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').slice(-80),path=Date.now()+'-'+safeName;const {data,error}=await sbClient.storage.from('asrar-assets').upload(path,file,{upsert:true,contentType:file.type||'image/jpeg'});if(error)throw error;const pub=sbClient.storage.from('asrar-assets').getPublicUrl(data.path);setP(A,d.up,pub.data.publicUrl)}else if(as){const r=await as.upload(f.files[0]);setP(A,d.up,r.url.startsWith('/_blob/')?r.url:'/_blob/'+r.id)}else{if(f.files[0].size>1.5e6)throw 0;const fr=new FileReader();setP(A,d.up,await new Promise((ok,no)=>{fr.onload=()=>ok(fr.result);fr.onerror=no;fr.readAsDataURL(f.files[0])}))}admR('تصویر بارگذاری شد؛ برای انتشار ذخیره کنید')}catch(x){$('#sm').textContent='خطا در آپلود'}};f.click()}
+ else if(t.id=='sv'){if(sbClient&&!ADM){$('#sm').textContent='ورود مدیر لازم است';return}if(!sbClient&&HAS&&!db){$('#sm').textContent='ذخیره‌سازی در دسترس نیست';return}
+  try{if(sbClient){const cfg=window.ASRAR_SUPABASE_CONFIG||{},payload={key:cfg.contentKey||'main',content:JSON.parse(JSON.stringify(A)),updated_at:new Date().toISOString()};const {error}=await sbClient.from(cfg.contentTable||'site_content').upsert(payload);if(error)throw error}else if(HAS)await db.doc('site/content').set(JSON.parse(JSON.stringify(A)));else localStorage.setItem('site',JSON.stringify(A));C=structuredClone(A);render();$('#sm').textContent='ذخیره شد ✓'}catch(x){$('#sm').textContent='ذخیره نشد: '+(x.message||'دسترسی مدیر لازم است')}}});
 function openAdm(){A=structuredClone(C);A.set=A.set||{slide:5,cards:6,pin:'1234'};admR();adm.style.display='flex'}
-let ADM=false;$('#lw').onclick=()=>{if(ADM)return openAdm();if(!HAS){const p=prompt('رمز مدیریت');if(p!==null&&p===((C.set||{}).pin||'1234'))openAdm()}};
+let ADM=false;$('#lw').onclick=async()=>{if(ADM)return openAdm();if(sbClient){try{let {data:current}=await sbClient.auth.getUser();let user=current?.user;if(!user){const email=prompt('ایمیل مدیر Supabase');if(!email)return;const password=prompt('رمز عبور مدیر');if(!password)return;const {data,error}=await sbClient.auth.signInWithPassword({email,password});if(error)throw error;user=data.user}if(user?.app_metadata?.role!=='admin'){await sbClient.auth.signOut();throw new Error('این حساب مجوز مدیریت ندارد')}ADM=true;openAdm()}catch(e){alert('ورود مدیر انجام نشد: '+(e.message||'خطای نامشخص'))}return}if(!HAS){const p=prompt('رمز مدیریت');if(p!==null&&p===((C.set||{}).pin||'1234'))openAdm()}};
 (async()=>{try{const u=U=await claude.use('user');if(u&&await u.canEdit())ADM=true;
  db=await claude.use('db');if(db)db.doc('site/content').onSnapshot(s=>{if(s.exists){C={...structuredClone(D),...s.data()};render()}startM()})}catch(e){}})();
 if(!HAS)try{const x=localStorage.getItem('site');if(x){const saved=JSON.parse(x);C={...structuredClone(D),...saved};if((saved.rev||0)<(D.rev||0)){C.books=structuredClone(D.books);C.secT=D.secT;C.rev=D.rev;}}}catch(e){}
 render();setNav(0);
+async function loadSupabaseContent(){if(!sbClient)return;const cfg=window.ASRAR_SUPABASE_CONFIG||{};try{const {data,error}=await sbClient.from(cfg.contentTable||'site_content').select('content').eq('key',cfg.contentKey||'main').maybeSingle();if(error)throw error;if(data?.content&&typeof data.content==='object'){C={...structuredClone(D),...data.content};render()}}catch(e){console.error('Supabase content load failed',e)}finally{startM()}}
+if(sbClient)loadSupabaseContent();
 
 // قفل کردن حرکت صفحه (جلوگیری از کشیده شدن کل اپ)
 document.addEventListener('touchmove', function(e){
