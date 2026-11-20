@@ -1,12 +1,22 @@
 {
+  "id": "./",
   "name": "اسرار ازل",
   "short_name": "اسرار ازل",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
   "background_color": "#0a0818",
   "theme_color": "#0a0818",
   "lang": "fa",
   "dir": "rtl",
-  "icons": [{"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
