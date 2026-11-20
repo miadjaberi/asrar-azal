@@ -9,7 +9,7 @@ create table if not exists public.store_products (
   name text not null check (length(trim(name)) between 1 and 180),
   description text not null default '',
   category text not null default '',
-  price_irr bigint not null check (price_irr >= 0),
+  price_toman bigint not null check (price_toman >= 0),
   image_url text not null default '',
   is_active boolean not null default true,
   sort_order integer not null default 0,
@@ -36,19 +36,19 @@ create table if not exists public.store_orders (
   order_code text not null unique,
   product_id uuid references public.store_products(id) on delete set null,
   product_name text not null,
-  product_price_irr bigint not null check (product_price_irr >= 0),
+  product_price_toman bigint not null check (product_price_toman >= 0),
   quantity integer not null check (quantity between 1 and 99),
   buyer_name text not null check (length(trim(buyer_name)) between 2 and 120),
   buyer_phone text not null check (length(trim(buyer_phone)) between 7 and 24),
   delivery_address text not null default '',
-  total_irr bigint not null check (total_irr >= 0),
+  total_toman bigint not null check (total_toman >= 0),
   receipt_path text not null,
   status text not null default 'pending_review'
-    check (status in ('pending_review', 'approved', 'rejected')),
+    check (status in ('awaiting_receipt', 'pending_review', 'approved', 'rejected')),
   admin_note text not null default '',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  constraint store_orders_total_matches check (total_irr = product_price_irr * quantity)
+  constraint store_orders_total_matches check (total_toman = product_price_toman * quantity)
 );
 
 create index if not exists store_orders_created_at_idx
