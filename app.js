@@ -32,7 +32,7 @@ function swipe(el,fn){let x=null;el.addEventListener('pointerdown',e=>x=e.client
 function render(){
  $('#bn1').textContent=C.brand.name;$('#bn2').textContent=C.brand.sub;
  lw.innerHTML=im(C.brand.logo)?`<img class="lgi" src="${im(C.brand.logo)}" alt="">`:LG;
- tr.innerHTML=C.banners.map((b,i)=>{const u=im(b.img);return `<div class="slide ${u?'':'s'+i%4}" ${u?`style="background:linear-gradient(270deg,#0a081800,#0a0818e0 75%),url(${u}) center/cover"`:''}><div class="bt"><h2>${esc(b.t).replace(/\n/g,'<br>')}</h2><p>${esc(b.p)}</p><button class="btn" data-go="${esc(b.go||'lib')}"><svg class="i"><use href="#cl"/></svg>${esc(b.b)}</button></div>${u?'':ART}</div>`}).join('');
+ tr.innerHTML=`<div class="track">${C.banners.map((b,i)=>{const u=im(b.img);return `<div class="slide ${u?'':'s'+i%4}" ${u?`style="background:linear-gradient(270deg,#0a081800,#0a0818e0 75%),url(${u}) center/cover"`:''}><div class="bt"><h2>${esc(b.t).replace(/\n/g,'<br>')}</h2><p>${esc(b.p)}</p><button class="btn" data-go="${esc(b.go||'lib')}"><svg class="i"><use href="#cl"/></svg>${esc(b.b)}</button></div>${u?'':ART}</div>`}).join('')}</div>`;
  dots.innerHTML=C.banners.map(()=>'<i></i>').join('');[...dots.children].forEach((d,j)=>d.onclick=()=>go(j));
  go(Math.min(bi,C.banners.length-1));
  $('#qk').innerHTML=C.quick.map((q,i)=>`<button class="q" data-go="${esc(q.pg)}"><div class="ic"><svg class="i"><use href="#${['book','cup','star','users'][i%4]}"/></svg></div><b>${esc(q.t)}</b><small>${esc(q.s)}</small></button>`).join('');
@@ -47,7 +47,7 @@ function render(){
  const nl=(b,t)=>{b.lastChild.textContent=t};nl(navs[0],'خانه');nl(navs[1],C.quick[0].t);nl(navs[3],C.quick[2].t);nl(navs[4],(C.pages.prof||{}).t||'پروفایل');
  if(cur!='home')show(cur,curArg);
 }
-function go(k){const n=C.banners.length||1;bi=(k+n)%n;tr.style.transform='translateX('+(-bi*100)+'%)';[...dots.children].forEach((d,j)=>d.classList.toggle('on',j==bi));clearInterval(bt);bt=setInterval(()=>go(bi+1),((C.set||{}).slide||5)*1000)}
+function go(k){const n=C.banners.length||1;bi=(k+n)%n;const track=tr.querySelector('.track');if(track)track.style.transform='translate3d('+(-bi*100)+'%,0,0)';[...dots.children].forEach((d,j)=>d.classList.toggle('on',j==bi));clearInterval(bt);if(n>1)bt=setInterval(()=>go(bi+1),((C.set||{}).slide||5)*1000)}
 function cc(k){const n=C.books.length;if(!n)return;ci=(k+n)%n;[...cv.querySelectorAll('.bk')].forEach((e,j)=>{let o=j-ci;if(o>n/2)o-=n;if(o<-n/2)o+=n;const a=Math.abs(o);e.style.opacity=a>2?0:a==2?.45:a==1?.8:1;e.style.zIndex=10-a;e.style.pointerEvents=a>2?'none':'auto';e.style.transform='translateX('+(o*78)+'px) scale('+(1.08-a*.2)+') rotateY('+(-o*22)+'deg)';if(a<=1&&e.dataset.bg&&!e.dataset.bgLoaded){e.style.backgroundImage=`url("${e.dataset.bg}")`;e.dataset.bgLoaded='1'}})}
 function fmtD(l,o,off=0){try{return new Intl.DateTimeFormat(l,o).format(new Date(Date.now()+off*864e5))}catch(e){return '—'}}
 const hd=x=>String(x||'').replace(/[^A-Za-z0-9_.]/g,''),sd=x=>String(x||'').replace(/^https?:\/\//,'').replace(/[^A-Za-z0-9.\-\/]/g,''),ln=x=>esc(x).replace(/\n/g,'<br>');
