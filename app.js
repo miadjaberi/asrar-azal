@@ -38,7 +38,7 @@ function render(){
  $('#qk').innerHTML=C.quick.map((q,i)=>`<button class="q" data-go="${esc(q.pg)}"><div class="ic"><svg class="i"><use href="#${['book','cup','star','users'][i%4]}"/></svg></div><b>${esc(q.t)}</b><small>${esc(q.s)}</small></button>`).join('');
  $('#st').textContent=C.secT;$('#al').textContent=C.all;
  cv.querySelectorAll('.bk').forEach(e=>e.remove());
- C.books.forEach((b,k)=>{const e=document.createElement('div');e.className='bk';e.style.background=GR[k%5];const image=im(b.img);if(image)e.dataset.bg=image;e.innerHTML=`<b class="cap">${esc(b.t)}</b><small>${esc(b.a)}</small>`;e.onclick=()=>ci==k?show('book',k):cc(k);cv.appendChild(e)});
+ C.books.forEach((b,k)=>{const e=document.createElement('div');e.className='bk';e.style.backgroundImage=GR[k%5];const image=im(b.img);if(image)e.dataset.bg=image;e.innerHTML=`<b class="cap">${esc(b.t)}</b><small>${esc(b.a)}</small>`;e.onclick=()=>ci==k?show('book',k):cc(k);cv.appendChild(e)});
  cc(Math.min(ci,C.books.length-1));
  tt(ti);
  $('#nt').innerHTML=C.notes.map((n,i)=>`<div class="note n${i%3+1}"><h4><svg class="i"><use href="#${['sp','layers','sp'][i%3]}"/></svg>${esc(n.t)}</h4><p>${esc(n.p)}</p></div>`).join('');
