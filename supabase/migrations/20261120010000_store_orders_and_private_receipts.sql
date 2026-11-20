@@ -56,6 +56,10 @@ create index if not exists store_orders_created_at_idx
 create index if not exists store_orders_status_idx
   on public.store_orders (status, created_at desc);
 
+grant all on public.store_products to service_role;
+grant all on public.store_settings to service_role;
+grant all on public.store_orders to service_role;
+
 alter table public.store_products enable row level security;
 alter table public.store_settings enable row level security;
 alter table public.store_orders enable row level security;
