@@ -84,19 +84,11 @@ Deno.serve(async (req) => {
     const buyerName = String(body.buyerName || "").trim();
     const buyerPhone = normalizePhone(body.buyerPhone);
     const address = String(body.address || "").trim();
-    const mime = String(body.receiptMime || "").toLowerCase();
-    const extensions: Record<string, string> = {
-      "image/jpeg": "jpg",
-      "image/png": "png",
-      "image/webp": "webp",
-    };
-
     if (!/^[0-9a-f-]{36}$/i.test(productId)) return json({ error: "کالای انتخاب‌شده معتبر نیست." }, 400);
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) return json({ error: "تعداد کالا معتبر نیست." }, 400);
     if (buyerName.length < 2 || buyerName.length > 120) return json({ error: "نام خریدار را درست وارد کنید." }, 400);
     if (buyerPhone.length < 7 || buyerPhone.length > 24 || !/^\d+$/.test(buyerPhone)) return json({ error: "شماره تماس معتبر نیست." }, 400);
     if (address.length > 500) return json({ error: "نشانی بیش از حد طولانی است." }, 400);
-    if (!extensions[mime]) return json({ error: "فیش باید تصویر JPG، PNG یا WEBP باشد." }, 400);
 
     const { data: product, error: productError } = await db
       .from("store_products")
