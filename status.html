@@ -29,12 +29,19 @@
 <li class="item done"><span class="mark">✓</span><div><strong>طرح اولیه دیتابیس و امنیت</strong><small>فایل SQL برای جدول محتوا، فضای ذخیره تصاویر و سیاست‌های دسترسی RLS نوشته شده است.</small></div></li>
 <li class="item done"><span class="mark">✓</span><div><strong>راهنمای راه‌اندازی</strong><small>مراحل اتصال Supabase و نکات امنیتی در README مخزن ثبت شده است.</small></div></li>
 <li class="item done"><span class="mark">✓</span><div><strong>بررسی نحوی فایل‌ها</strong><small>کد JavaScript از نظر خطای نحوی و Manifest از نظر ساختار JSON بررسی شده‌اند.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>طراحی و کدنویسی فروشگاه در شاخه کاری</strong><small>نمایش تصویر بدون نوشته روی کارت، صفحه جزئیات، سفارش تلفنی و فرم خرید در شاخه مستقل پیاده‌سازی شده‌اند.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>ساختار سفارش و فیش خصوصی</strong><small>جدول کالاها، تنظیمات پرداخت، سفارش‌ها، محدودسازی درخواست‌ها و bucket خصوصی فیش‌ها به‌صورت migration آماده شده‌اند.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>تابع امن ثبت سفارش</strong><small>Edge Function برای ایجاد سفارش، بارگذاری امن فیش، ثبت نهایی و پیگیری وضعیت نوشته شده است؛ هنوز روی پروژه واقعی مستقر نشده است.</small></div></li>
+<li class="item done"><span class="mark">✓</span><div><strong>پنل مدیریت فروشگاه</strong><small>ویرایش کالاها و قیمت، تنظیم تلفن و شماره کارت، مشاهده فیش خصوصی و تأیید یا رد پرداخت در کد اضافه شده است.</small></div></li>
 </ul>
 </section>
 
 <section class="section">
 <h2>◷ کارهای باقی‌مانده</h2>
 <ul>
+<li class="item todo"><span class="mark">!</span><div><strong>اجرای migration فروشگاه</strong><small>فایل دوم فروشگاه و سفارش‌ها باید بعد از migration اولیه در Supabase اجرا شود.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>استقرار Edge Function فروشگاه</strong><small>تابع create-store-order باید در پروژه واقعی مستقر و تنظیم verify_jwt آن مطابق فایل config بررسی شود.</small></div></li>
+<li class="item todo"><span class="mark">!</span><div><strong>تست کامل سفارش و فیش</strong><small>ثبت سفارش آزمایشی، بارگذاری واقعی تصویر، نمایش خصوصی فیش برای مدیر، تأیید/رد و پیگیری مشتری هنوز تست نشده‌اند.</small></div></li>
 <li class="item todo"><span class="mark">!</span><div><strong>ساخت پروژه واقعی Supabase</strong><small>پروژه هنوز ساخته نشده؛ بنابراین اتصال زنده دیتابیس و فضای ذخیره‌سازی فعال نیست.</small></div></li>
 <li class="item todo"><span class="mark">!</span><div><strong>تکمیل تنظیمات اتصال</strong><small>پس از ساخت پروژه، Project URL و کلید عمومی Publishable/anon باید در supabase-config.js وارد شوند. کلید محرمانه هرگز نباید در سایت قرار گیرد.</small></div></li>
 <li class="item todo"><span class="mark">!</span><div><strong>اجرای فایل SQL</strong><small>Migration موجود باید در SQL Editor پروژه Supabase اجرا شود.</small></div></li>
@@ -46,7 +53,7 @@
 </section>
 
 <div class="note"><strong>وضعیت فعلی سرور:</strong> اتصال نرم‌افزاری و فایل‌های راه‌اندازی آماده‌اند؛ اما پروژه Supabase هنوز ساخته و متصل نشده است. بنابراین قابلیت‌های وابسته به سرور تا آن زمان عملیاتی محسوب نمی‌شوند.</div>
-<div class="foot">این گزارش وضعیت واقعی کارهای ثبت‌شده را نشان می‌دهد و جایگزین تست اجرایی نیست.<br><a class="back" href="./">بازگشت به اسرار ازل</a></div>
+<div class="foot">کدهای جدید فروشگاه فعلاً فقط در شاخه کاری مستقل هستند و در main یا سایت زنده ادغام نشده‌اند. این گزارش وضعیت کد و زیرساخت را از تست اجرایی تفکیک می‌کند.<br><a class="back" href="./">بازگشت به اسرار ازل</a></div>
 </main>
 </body>
 </html>
