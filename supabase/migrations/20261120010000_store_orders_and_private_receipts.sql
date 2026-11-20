@@ -187,3 +187,44 @@ $$;
 
 revoke all on function public.consume_store_order_rate_limit(text, integer, integer) from public, anon, authenticated;
 grant execute on function public.consume_store_order_rate_limit(text, integer, integer) to service_role;
+
+
+-- Seed the ten currently published shop items once. Existing admin-edited prices
+-- are never overwritten when this migration is reapplied.
+insert into public.store_products
+  (slug, name, description, category, price_toman, image_url, sort_order, is_active)
+values
+  ('p1', 'چشم ببر', 'چشم زخم ادارات دادگاه برای برد و هیبت و نفوذ 
+قدرت در تکلم', 'محدود', 5000, 'shop/p1.jpeg', 1, true),
+  ('p2', 'چشم زخم و رفع حسادت و گشایده عقده', 'هیبت 
+قدرت 
+ابطال 
+سحر 
+و جادو 
+چشم زخم', 'موجود', 3000, 'shop/p2.jpeg', 2, true),
+  ('p3', 'خر مهره اصل پاکستان', 'شانس و اقبال', 'اولویت اولین سفارش', 15, 'shop/p3.jpeg', 3, true),
+  ('p4', 'دستور رایگان طلسم تخم‌مرغ', 'زیبایی و دشمنی', 'جدید', 101, 'shop/p4.jpeg', 4, true),
+  ('p5', 'طلسم رزق و روزی و گشایش کار', 'رزق و روزی 
+گشایش 
+فتوحات 
+برد کردن معاملات 
+خرید و فروش', 'جدید', 3000, 'shop/p5.jpeg', 5, true),
+  ('p6', 'طلسم یهودی جلب و محبت مجرب', 'جلب مشتری 
+جلب مطلوب 
+همسر  دوست شما', 'محدود', 5000, 'shop/p6.jpeg', 6, true),
+  ('p7', 'قفل زبانبند سکاک محبتی برای زوج یا مطلوب شما', 'محبتی 
+زبانبندی 
+توافقی 
+شراکت 
+برد', 'محدود', 3300, 'shop/p7.jpeg', 7, true),
+  ('p8', 'مهره مار افعی قابل تست آفریقایی', 'محبتی 
+ازدواج 
+گشایش اقبال 
+معاملات 
+زبانبند و غیره', 'ویژه❗محدود', 10000, 'shop/p8.jpeg', 8, true),
+  ('p9', 'مهره موکل دار سلطانی بری مغربی', 'جلب 
+خیر 
+منفعت 
+برکت', 'محدود', 12, 'shop/p9.png', 9, true),
+  ('p10', 'مهره های برزمی معروف به مهره برد', 'برد در هر چه در نظر داری لازم باشد و مشکل دار هستی', 'محدود', 130000, 'shop/p10.jpeg', 10, true)
+on conflict (slug) do nothing;
