@@ -39,7 +39,7 @@ where email = 'YOUR_ADMIN_EMAIL';
 1. ابتدا migration اولیه `supabase/migrations/20261120000000_initial_online_backend.sql` را در SQL Editor اجرا کنید.
 2. سپس migration فروشگاه `supabase/migrations/20261120010000_store_orders_and_private_receipts.sql` را اجرا کنید. این فایل جدول کالاها، تنظیمات تماس/کارت، سفارش‌ها، محدودسازی درخواست‌ها و فضای خصوصی فیش‌ها را می‌سازد و ده کالای فعلی را با قیمت‌های فعلی سایت وارد می‌کند.
 3. در `supabase-config.js` فقط Project URL و کلید عمومی پروژه را وارد کنید؛ کلید محرمانه هرگز نباید در سایت قرار بگیرد.
-4. تابع `supabase/functions/create-store-order/index.ts` را با نام `create-store-order` در Supabase Edge Functions منتشر کنید. تنظیم `verify_jwt = false` برای این تابع در `supabase/config.toml` ثبت شده است؛ تابع خودش ورودی‌ها را اعتبارسنجی و درخواست‌ها را محدود می‌کند.
+4. تابع `supabase/functions/create-store-order/index.ts` را با نام `create-store-order` در Supabase Edge Functions منتشر کنید. اگر از Supabase Dashboard استفاده می‌کنید، هنگام ساخت تابع گزینه Verify JWT را خاموش کنید؛ اگر با CLI منتشر می‌کنید، تنظیم `verify_jwt = false` از `supabase/config.toml` خوانده می‌شود. تابع خودش ورودی‌ها را اعتبارسنجی و درخواست‌ها را محدود می‌کند.
 5. در پنل مدیریت برنامه، تب «اطلاعات پرداخت» شماره تماس، ساعت تماس (پیش‌فرض ۱۸ الی ۲۱)، شماره کارت، نام صاحب کارت و بانک را تنظیم کنید.
 6. در تب «مدیریت کالاها» قیمت و مشخصات کالاها را بازبینی کنید. مقادیر اولیه قیمت از متن فعلی فروشگاه استخراج شده‌اند و پیش از فروش باید توسط مدیر تأیید شوند.
 7. سفارش‌ها در تب «سفارش‌ها» نمایش داده می‌شوند. مدیر فقط پس از مشاهده فیش می‌تواند پرداخت را تأیید یا رد کند.
