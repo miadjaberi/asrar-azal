@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css?v=3">
-<link rel="stylesheet" href="layout-fix.css?v=1">
+<link rel="stylesheet" href="layout-fix.css?v=2">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -37,8 +37,10 @@
 </defs></svg>
 <div class="app">
  <div class="hdr">
-  <div class="ttl"><span id="bn1">اسرار ازل</span><small id="bn2">سرکتاب • رمل • مکاشفه</small></div>
-  <span id="lw"></span>
+  <div class="ttl">
+   <img id="lg" class="lgi" src="" alt="اسرار ازل" width="36" height="36">
+   <div class="tn"><span id="bn1">اسرار ازل</span><small id="bn2">سرکتاب • رمل • مکاشفه</small></div>
+  </div>
  </div>
  <div class="main"><div class="scroll">
    <div class="banner" id="tr"></div>
@@ -72,6 +74,8 @@
 <div id="adm"><div class="ap" id="ap"></div></div>
 <script src="supabase-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=9"></script>
+<script src="logo.js?v=1"></script>
+<script>if(window.ASRAR_LOGO_DATA){var el=document.getElementById("lg");if(el)el.src=window.ASRAR_LOGO_DATA;}</script>
+<script src="app.js?v=10"></script>
 </body>
 </html>
