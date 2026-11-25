@@ -1,5 +1,13 @@
 /* asrar layout bridge — HTML uses .app/.main/.hdr */
 .app{height:100%;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#0d0a20,#090716);direction:rtl;position:relative}
 .main{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;position:relative}
-.hdr{display:flex;justify-content:space-between;align-items:center;direction:ltr;padding:6px 14px 12px;flex-shrink:0}
-.ttl #bn1,.ttl span{display:block;font-size:17px;font-weight:800;color:var(--gold)}
+
+/* header: logo + brand name */
+.hdr{display:flex;justify-content:space-between;align-items:center;direction:ltr;padding:calc(6px + env(safe-area-inset-top,0px)) 14px 12px;flex-shrink:0}
+.ttl{display:flex;align-items:center;gap:10px;direction:rtl}
+.ttl .tn{display:flex;flex-direction:column;gap:1px}
+.ttl #bn1,.ttl span{display:block;font-size:17px;font-weight:800;color:var(--gold);line-height:1.2}
+.ttl small,#bn2{font-size:10.5px;color:var(--mut);line-height:1.2}
+.lgi,#lg{width:var(--ls,36px);height:var(--ls,36px);object-fit:contain;border-radius:8px;flex-shrink:0}
+#lw{display:inline-flex;align-items:center}
+#lw .lgi{width:var(--ls,36px);height:var(--ls,36px);object-fit:contain;border-radius:8px}
